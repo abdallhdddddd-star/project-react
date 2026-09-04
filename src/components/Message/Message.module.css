@@ -1,0 +1,38 @@
+.h1 {
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 48px);
+  color: oklch(0.278 0.033 256.848);
+}
+
+.p {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  color: oklch(0.446 0.03 256.802);
+}
+
+.email,
+.phone,
+.address {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+              0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%; /* عشان الكروت تبقى طالعة بنفس الطول */
+}
+
+.email:hover,
+.phone:hover,
+.address:hover {
+  transform: translateY(-5px);
+}
+
+.p-2,
+.p-3,
+.p-4 {
+  font-size: 16px;
+  font-weight: 400;
+  color: oklch(0.446 0.03 256.802);
+  margin-bottom: 0;
+}

@@ -1,0 +1,27 @@
+.Hero{
+    background: linear-gradient( rgba(0,0,0,.5)  ,rgba(0,0,0,.5))    ,  url(../../assets/hero-2.png);
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-xxl{
+ font-size: 70px;
+ max-width: 900px;
+margin: 0 auto;
+text-align: center;
+}
+
+
+.p-6{
+padding-inline: 150px;
+
+}
+
+.span{
+    color: #50A2FF;
+}
