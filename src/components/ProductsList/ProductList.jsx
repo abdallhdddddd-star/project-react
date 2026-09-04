@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 
 import Card from "../Card/Card";
-import Loader from "../Loader/Loader";
 
 
 export default function ProductList() {
@@ -29,12 +28,7 @@ export default function ProductList() {
     }, []);
 
 
-    if(isloading){
-        return(
-            <Loader/>
-        );
-    }
-
+  
 
     if(error){
         return <div className="alert alert-danger"></div>
