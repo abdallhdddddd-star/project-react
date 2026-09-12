@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import Loader from "../components/Loader/Loader";
 
 export default function ProductView() {
   const { id } = useParams();

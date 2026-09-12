@@ -1,11 +1,13 @@
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, } from "react-icons/fi";
+import { CgMouse } from "react-icons/cg";
 import styles from "./hero.module.css"
+import { motion } from "motion/react"
 console.log(styles);
 
 export default function Hero() {
 
     return (<>
-        
+
         <div className={styles.Hero}>
             <div className={`caption text-light text-center` + styles["p-6"]}>
                 <h1 className={styles["text-xxl"]}>Discover Amazing Products
@@ -16,7 +18,13 @@ export default function Hero() {
 
                     </button>
                     <button className=" btn btn-outline-light btn-lg">View Products</button>
+                    
                 </div>
+                <motion.div animate={{y:[0,10,0]}} transition={{duration:1,repeat:Infinity}}
+                 className="d-flex justify-content-center  mt-5 p-2">
+                    
+                        <CgMouse className="fs-1" />
+                    </motion.div>
             </div>
         </div>
     </>)

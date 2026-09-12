@@ -23,6 +23,10 @@ export default function Navbar() {
       body: "contact",
       path: "/contact",
     },
+    {
+      body: "login",
+      path: "/register",
+    },
   ];
 
 
