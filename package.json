@@ -12,7 +12,8 @@
   "dependencies": {
     "axios": "^1.19.0",
     "bootstrap": "^5.3.8",
-    "motion": "^13.2.0",
+    "framer-motion": "^14.7.1",
+    "motion": "^13.5.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-hook-form": "^7.87.0",

@@ -1,40 +1,70 @@
 import { Link } from "react-router-dom";
-import { formatstar } from "../../lib/formatstar";
 
 export default function Card({ product }) {
+  const image = product?.images?.[0] || product?.image;
+
   return (
-    <div className="col-md-6 col-lg-3">
-      <div className="card-img px-4 text-center p-4 position-relative">
-        <div className="card-img-top text-center p-2">
+    <div className="col-md-6 col-lg-4 mb-4">
+      <div 
+        className="card h-100 border-0 shadow-sm overflow-hidden"
+        style={{
+          borderRadius: "16px",
+          transition: "all 0.3s ease-in-out",
+          backgroundColor: "#fff"
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-6px)";
+          e.currentTarget.style.boxShadow = "0 1rem 3rem rgba(0,0,0,.12)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = "0 .125rem .25rem rgba(0,0,0,.075)";
+        }}
+      >
+        {/* حاوية الصورة عشان تعمل Zoom خفيف وقت الـ Hover */}
+        <div style={{ overflow: "hidden", position: "relative" }}>
           <img
-            className="img-fluid"
-            style={{ height: "200px", objectFit: "contain" }}
-            src={product?.image}
-            alt={product?.title || "product"}
+            src={image}
+            alt={product?.title || "Product"}
+            className="card-img-top"
+            style={{
+              height: "260px",
+              objectFit: "cover",
+              transition: "transform 0.4s ease"
+            }}
+            onMouseEnter={(e) => e.target.style.transform = "scale(1.05)"}
+            onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
           />
         </div>
-        <div className="card-body">
-          <h2 className="fw-bold">
-            {product?.title?.split(" ").slice(0, 4).join(" ")}......
-          </h2>
 
-          <span
-            style={{ top: "20px", left: "10px" }}
-            className="bg-primary badge position-absolute"
+        <div className="card-body d-flex flex-column p-4">
+          <h5 
+            className="card-title fw-bold text-dark text-truncate mb-2" 
+            style={{ fontSize: "1.1rem" }}
           >
-            {product?.category}
-          </span>
+            {product?.title}
+          </h5>
 
-          <div className="d-flex align-items-center justify-content-between">
-            <span className="text-primary fw-bold">
+          <p className="card-text text-muted small text-truncate mb-3">
+            {product?.description}
+          </p>
+
+          <div className="d-flex align-items-center justify-content-between mt-auto pt-2">
+            <span className="fw-bold text-primary fs-5">
               ${product?.price}
             </span>
-            <Link to={`/products/${product.id}`} className="btn btn-primary">View</Link>
-          </div>
 
-          <div className="d-flex align-items-center">
-            <span>{formatstar(product?.rating?.rate)}</span>
-            ( <span className="text-muted">{product?.rating?.count}</span> )
+            <Link
+              to={`/products/${product?.id}`}
+              className="btn btn-primary btn-sm px-4 py-2"
+              style={{
+                borderRadius: "8px",
+                fontWeight: "500",
+                transition: "background-color 0.2s"
+              }}
+            >
+              View
+            </Link>
           </div>
         </div>
       </div>

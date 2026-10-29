@@ -1,67 +1,100 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
-
+import { useEffect, useState } from "react";
 import Card from "../Card/Card";
 
+const ITEMS_PER_PAGE = 10;
 
 export default function ProductList() {
-    const [Products, setProducts] = useState([]);
-    const [isloading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    async function getProduct() {
+  useEffect(() => {
+    let isActive = true;
 
-        try {
-            setIsLoading(true);
-            const { data } = await axios.get("https://fakestoreapi.com/products");
-            setProducts(data);
-            setError("")
-        } catch (error) {
-            setError(error.message)
-        } finally {
-            setIsLoading(false)
+    async function fetchProducts() {
+      try {
+        const { data } = await axios.get(
+          "https://api.escuelajs.co/api/v1/products"
+        );
+        if (isActive) {
+          setProducts(data);
+          setError("");
         }
+      } catch (requestError) {
+        if (isActive) {
+          setError(requestError.message || "Unable to load products.");
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
     }
 
-    useEffect(() => {
-        getProduct();
-    }, []);
+    fetchProducts();
 
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
-  
+  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const currentProducts = products.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
-    if(error){
-        return <div className="alert alert-danger"></div>
-    }
+  return (
+    <section>
+      <div className="container py-4">
+        <header className="text-center mb-4">
+          <h2 className="fw-bold">Our Featured Products</h2>
+          <p className="text-muted small mb-0">
+            Discover our handpicked selection of products.
+          </p>
+        </header>
 
+        {isLoading && <p className="text-center">Loading products...</p>}
+        {error && <div className="alert alert-danger">{error}</div>}
+        {!isLoading && !error && products.length === 0 && (
+          <p className="text-center">No products found.</p>
+        )}
 
+        {!isLoading && !error && products.length > 0 && (
+          <>
+            <div className="row g-3">
+              {currentProducts.map((product) => (
+                <Card key={product.id} product={product} />
+              ))}
+            </div>
 
-
-
-    return (
-        <>
-            <section>
-                <div className="container py-5 overflow-hidden">
-                    <header className=" text-center ">
-                        <h1 className=" text-body">Our Featured Products</h1>
-                        <p>Discover our handpicked selection of premium products at unbeatable prices</p>
-                    </header>
-
-
-                    <div id="row" className="row gy-3">
-
-                        {Products.map((product) => <Card product={product} key={product.id} />)}
-                    </div>
-                </div>
-
-
-            </section>
-
-
-
-
-
-
-        </>
-    )
+            <div className="d-flex justify-content-center align-items-center gap-2 mt-4">
+              <button
+                type="button"
+                className="btn btn-outline-secondary btn-sm px-3"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((page) => page - 1)}
+              >
+                Prev
+              </button>
+              <span className="small text-muted fw-semibold">
+                {currentPage} / {totalPages}
+              </span>
+              <button
+                type="button"
+                className="btn btn-primary btn-sm px-3"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((page) => page + 1)}
+              >
+                Next
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </section>
+  );
 }
